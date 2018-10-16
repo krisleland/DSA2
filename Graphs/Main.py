@@ -3,12 +3,10 @@ Created on Sep 12, 2018
 
 @author: Kris
 '''
-from Graphs.Graph import Graph
+from Graphs.Graphs import Graph
 import csv
 from Graphs.Edge import Edge
-from pqueue import pqueue
-from Leaf.Leaf import Leaf
-from Algorithm import BranchBound
+from Graphs.Package import create_package_list
 from Algorithm.BranchBound import BnB
 from Algorithm.Dijkstra import Dijkstra
 
@@ -26,12 +24,13 @@ def main():
         for i in range(1,len(x)):
             for j in range(0, i):
                 graph.add_edge(Edge(graph.node_list[x[i][1]], graph.node_list[x[j][1]], x[i][j+2]))
-
+    print("HEY")
+    pack_list = create_package_list()
     x = Dijkstra(graph)
     short_graph = x.short_graph()
-    y = BnB(graph, short_graph)
+    #Make second graph short graph
+    y = BnB(graph, graph, pack_list)
     y.run()
-    
-    print(y.best_leaf)
+    print(y.best_leaf, y.best_leaf.current_distance)    
     
 main()
